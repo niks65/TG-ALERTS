@@ -1,0 +1,49 @@
+name: Arkham Alerts
+
+on:
+  schedule:
+    # Every 10 minutes. GitHub often runs these a few minutes late.
+    - cron: "*/10 * * * *"
+  workflow_dispatch:   # lets you run it by hand from the Actions tab
+
+concurrency:
+  group: arkham-alerts
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      # Carries the "already alerted" list from one run to the next
+      # so you don't get duplicate notifications.
+      - name: Restore seen-ids cache
+        uses: actions/cache@v4
+        with:
+          path: seen_ids.txt
+          key: arkham-seen-${{ github.run_id }}
+          restore-keys: |
+            arkham-seen-
+
+      - name: Check for transfers
+        env:
+          ARKHAM_API_KEY: ${{ secrets.ARKHAM_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          MIN_USD: ${{ vars.MIN_USD }}
+          LOOKBACK_MINUTES: ${{ vars.LOOKBACK_MINUTES }}
+          CHAINS: ${{ vars.CHAINS }}
+          ONLY_TOKENS: ${{ vars.ONLY_TOKENS }}
+          SKIP_STABLES: ${{ vars.SKIP_STABLES }}
+          MAX_ALERTS: ${{ vars.MAX_ALERTS }}
+        run: python check.py

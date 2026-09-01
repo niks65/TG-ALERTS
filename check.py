@@ -53,7 +53,7 @@ STABLES = {
     "USDT", "USDC", "DAI", "BUSD", "TUSD", "USDE", "SUSDE", "USDS", "SUSDS",
     "FDUSD", "PYUSD", "USDD", "FRAX", "LUSD", "GUSD", "USDP", "USD1",
     "USDB", "CRVUSD", "GHO", "MIM", "EURC", "EURT", "USDF", "USDY",
-    "USDC.E", "USDT.E", "AUSDC", "AUSDT", "CUSDC", "CUSDT", "WETH",
+    "USDC.E", "USDT.E", "AUSDC", "AUSDT", "CUSDC", "CUSDT", "WETH", "AERO", "VVV",
 }
 
 ARKHAM_URL = "https://api.arkm.com/transfers"

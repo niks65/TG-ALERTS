@@ -43,7 +43,7 @@ if missing:
     sys.exit(1)
 
 MIN_USD = float(os.environ.get("MIN_USD") or 10000)
-LOOKBACK_MIN = int(os.environ.get("LOOKBACK_MINUTES") or 12)
+LOOKBACK_MIN = int(os.environ.get("LOOKBACK_MINUTES") or 130)
 CHAINS = (os.environ.get("CHAINS") or "").strip()
 ONLY_TOKENS = (os.environ.get("ONLY_TOKENS") or "").strip()
 SKIP_STABLES = (os.environ.get("SKIP_STABLES") or "true").lower() != "false"
